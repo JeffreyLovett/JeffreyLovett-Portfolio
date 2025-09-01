@@ -1,1 +1,185 @@
-<!doctype html><html><body><h1>Jeffrey Lovett Portfolio</h1></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Jeffrey Lovett — Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg:#111315;--panel:#16181b;--text:#F5F5F7;--sub:#B9BDC6;
+      --neon:#FF7A00;--neon2:#FF9A2E;--border:#2a2e35;
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,'Noto Sans',sans-serif}
+    .wrap{max-width:1100px;margin:0 auto;padding:36px 16px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:16px;
+      box-shadow:0 0 0 1px rgba(255,122,0,.08),0 10px 30px rgba(0,0,0,.35);padding:20px;margin-bottom:14px}
+    h1{margin:0;font-size:28px;text-shadow:0 0 30px rgba(255,122,0,.15)}
+    h2{margin:0 0 6px 0;font-size:18px}
+    p{margin:6px 0} .sub{color:var(--sub)}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg, rgba(255,122,0,.18), rgba(255,122,0,.10));
+      border:1px solid rgba(255,122,0,.35);border-radius:999px;padding:6px 12px;font-size:12px;color:var(--text);text-decoration:none}
+    .grid{display:grid;gap:12px}
+    @media(min-width:900px){.grid-3{grid-template-columns:repeat(3,1fr)}}
+    a{color:var(--text);text-decoration:none}
+    .tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:4px 8px;font-size:12px;color:var(--sub)}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+    .status{color:var(--neon);font-size:12px;text-transform:uppercase}
+    footer{color:var(--sub);font-size:12px;margin-top:18px}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="card">
+      <h1>Jeffrey Lovett</h1>
+      <p class="sub">Chemist → Developer & Founder of Ugotta Group LLC</p>
+      <p>I design, test, and launch practical AI/Web3 tools and creative digital products. Rebuilding my developer profile while shipping useful things.</p>
+      <div class="row" style="margin-top:8px">
+        <a class="pill" href="https://ugottagroup.com" target="_blank">ugottagroup.com</a>
+        <a class="pill" href="https://ugot2ai.org" target="_blank">ugot2ai.org</a>
+        <a class="pill" href="https://lab4g.tech" target="_blank">lab4g.tech</a>
+        <a class="pill" href="mailto:Jeffreylovett@Ugottagroup.com">Jeffreylovett@Ugottagroup.com</a>
+        <a class="pill" href="mailto:Jeffreylovett@protonmail.com">Jeffreylovett@protonmail.com</a>
+        <a class="pill" href="https://g.dev/Jeffreylovett" target="_blank">g.dev/Jeffreylovett</a>
+      </div>
+    </section>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="card">
+      <h2><span style="color:var(--neon)">▸</span> Achievements & Badges</h2>
+      <p class="sub">Auto-loaded from <code>certifications.json</code> if present. You can edit that file without touching this page.</p>
+      <div id="achievements" class="grid grid-3"></div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="card">
+      <h2><span style="color:var(--neon)">▸</span> Selected Projects</h2>
+      <div class="grid grid-3" id="projects"></div>
+    </section>
+
+    <!-- OBJECTIVES -->
+    <section class="card">
+      <h2><span style="color:var(--neon)">▸</span> Objectives</h2>
+      <div class="grid grid-3" id="objectives"></div>
+    </section>
+
+    <!-- PERSONAL GROWTH -->
+    <section class="card">
+      <h2><span style="color:var(--neon)">▸</span> Personal Growth Tools</h2>
+      <div class="grid grid-3" id="growth"></div>
+    </section>
+
+    <footer>© <span id="year"></span> Jeffrey Lovett — GitHub Pages</footer>
+  </div>
+
+<script>
+  // --- Static data (edit here) ------------------------------------------------
+  const DATA = {
+    projects: [
+      { name:"Ugotta Group", url:"https://ugottagroup.com", blurb:"Central hub for brands, tools, and partnerships.", tags:["Brand","Hub","Business"] },
+      { name:"Ugot2AI", url:"https://ugot2ai.org", blurb:"AI content studio & agent workspace.", tags:["AI","Agents","Content"] },
+      { name:"Lab4G", url:"https://lab4g.tech", blurb:"Personal dev studio & experiments.", tags:["R&D","Prototypes"] },
+    ],
+    objectives: [
+      { title:"Rebuild Google Developer profile", status:"in-progress", note:"Publish badges, link live demos, add case studies." },
+      { title:"Launch personal portfolio v1", status:"in-progress", note:"GitHub Pages + Notion staging." },
+      { title:"AAS in AI Software Engineering (Maestro/Peloton)", status:"applied", note:"Document learning journey." }
+    ],
+    growth: [
+      { name:"Certification Tracker", desc:"Single JSON powers Achievements; update without layout changes.", linkText:"Edit data", link:"https://github.com/" },
+      { name:"Learning Sprints (2-week)", desc:"Tightly scoped deliverables with a public changelog and demo links.", linkText:"See template", link:"#" },
+      { name:"Skill Matrix", desc:"Track competency by domain to guide next sprint focus.", linkText:"Open matrix", link:"#"}
+    ],
+    // Fallback achievements if certifications.json not found:
+    achievementsFallback: [
+      { title:"Plant Chemist — Sherwin-Williams", detail:"Advanced from Lab Tech to Plant Chemist (5+ years).", tags:["Chemistry","R&D"] },
+      { title:"18+ technical badges (legacy)", detail:"Rebuilding fresh developer profile while shipping new work.", tags:["Cloud","AI"] },
+      { title:"Founded Ugotta Group LLC", detail:"Creative digital company making practical AI/Web3 tools.", tags:["Entrepreneurship","Web3"] }
+    ]
+  };
+
+  // --- Render helpers ---------------------------------------------------------
+  const el = (html) => new DOMParser().parseFromString(html, 'text/html').body.firstChild;
+
+  function renderAchievements(list){
+    const root = document.getElementById('achievements'); root.innerHTML = '';
+    list.forEach(a=>{
+      root.appendChild(el(`
+        <div class="card">
+          <h3 style="margin:0">${a.title}</h3>
+          <p class="sub">${a.detail||''}</p>
+          <div class="row">
+            ${(a.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}
+          </div>
+        </div>`));
+    });
+  }
+
+  function renderProjects(){
+    const root = document.getElementById('projects');
+    root.innerHTML = DATA.projects.map(p=>`
+      <a class="card" href="${p.url}" target="_blank">
+        <div class="meta">
+          <h3 style="margin:0">${p.name}</h3>
+        </div>
+        <p class="sub">${p.blurb}</p>
+        <div class="row">
+          ${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}
+        </div>
+      </a>`).join('');
+  }
+
+  function renderObjectives(){
+    const root = document.getElementById('objectives');
+    root.innerHTML = DATA.objectives.map(o=>`
+      <div class="card">
+        <div class="meta">
+          <h3 style="margin:0">${o.title}</h3>
+          <span class="status">${o.status}</span>
+        </div>
+        <p class="sub">${o.note||''}</p>
+      </div>`).join('');
+  }
+
+  function renderGrowth(){
+    const root = document.getElementById('growth');
+    root.innerHTML = DATA.growth.map(g=>`
+      <a class="card" href="${g.link}" target="_blank">
+        <h3 style="margin:0">${g.name}</h3>
+        <p class="sub">${g.desc}</p>
+        <span style="color:var(--neon)">${g.linkText} →</span>
+      </a>`).join('');
+  }
+
+  // --- Load certifications.json if available ---------------------------------
+  async function loadCerts(){
+    try{
+      const res = await fetch('./certifications.json', {cache:'no-store'});
+      if(!res.ok) throw new Error('no certs');
+      const certs = await res.json();
+      if(Array.isArray(certs) && certs.length){
+        // Map to display structure
+        const mapped = certs.map(c=>({
+          title: `${c.provider}: ${c.name}`,
+          detail: [c.level, c.issued ? `Issued ${c.issued}` : '', c.expires ? `Expires ${c.expires}` : '']
+                  .filter(Boolean).join(' · '),
+          tags: c.tags || []
+        }));
+        renderAchievements(mapped);
+        return;
+      }
+      throw new Error('empty');
+    }catch(e){
+      renderAchievements(DATA.achievementsFallback);
+    }
+  }
+
+  // --- Init -------------------------------------------------------------------
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderProjects(); renderObjectives(); renderGrowth(); loadCerts();
+</script>
+</body>
+</html>
